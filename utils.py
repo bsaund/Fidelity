@@ -5,7 +5,6 @@ import yfinance as yf
 from datetime import datetime
 
 
-
 def put_break_even(strike, cost):
     """
     :param strike: strike price of the put option
