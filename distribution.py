@@ -97,7 +97,20 @@ class PiecewiseUniform:
         raise Exception("x={} is out of range [{}, {}]".format(x, self.bounds[0], self.bounds[-1]))
 
 
-def expected_value(dist, f, resolution = 0.0001):
+def analytic_expected_value(dist, integral):
+    """
+    Calculates the exact expected value of f given a piecewise-constant distribution over x and the integral of f
+    :param dist: piecewise unifrom distribution
+    :param integral: piecewise definite integral
+    :return: expected value: integral(f(x) * p(x))
+    """
+    e = 0
+    for l, u, prob in zip(dist.bounds, dist.bounds[1:], dist.probability_densities):
+        e += prob * integral.evaluate(l, u)
+    return e
+
+
+def numerical_expected_value(dist, f, resolution = 0.0001):
     """
     Approximate expected Value of f under distribution dist
     :param dist: probability distribution
